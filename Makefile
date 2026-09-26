@@ -17,8 +17,9 @@ PORT    ?= 8000
 SPEED   ?= 10
 
 .DEFAULT_GOAL := help
-.PHONY: help setup demo serve dataset train evaluate pipeline test lint \
-        up down logs rebuild capture replay clean distclean results
+.PHONY: help setup demo serve dataset train evaluate benchmark pipeline test \
+        lint up down logs rebuild capture replay clean distclean results \
+        bench-results
 
 help:                     ## show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -52,12 +53,19 @@ train: setup               ## fit the detectors and the root-cause rankers (~70s
 evaluate: setup            ## score detection, diagnosis and throughput (~70s)
 	$(PY) scripts/evaluate.py
 
-pipeline: dataset train evaluate  ## the whole measured pipeline, end to end
+benchmark: setup           ## time every pipeline stage in isolation (~60s)
+	$(PY) scripts/benchmark.py
+
+pipeline: dataset train evaluate benchmark  ## the whole measured pipeline, end to end
 	@echo
-	@echo "results: experiments/results/report.md"
+	@echo "results:   experiments/results/report.md"
+	@echo "benchmark: experiments/results/benchmark.md"
 
 results:                   ## print the last evaluation report
 	@cat experiments/results/report.md
+
+bench-results:             ## print the last benchmark report
+	@cat experiments/results/benchmark.md
 
 # ------------------------------------------------------------------- tests
 test: setup                ## run the test suite

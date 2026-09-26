@@ -50,8 +50,9 @@ PostgreSQL get ranked with its evidence.
 To reproduce every number in this README:
 
 ```bash
-make pipeline      # dataset -> train -> evaluate, about 4 minutes
-make results
+make pipeline      # dataset -> train -> evaluate -> benchmark, about 5 minutes
+make results       # accuracy report
+make bench-results # performance report
 ```
 
 To run the real distributed system instead of the simulated one:
@@ -135,15 +136,67 @@ separate these methods; this dataset cannot. The learned coefficients are at
 least sensible, with `dependency_broke_first` (−2.27) the strongest signal and
 `anomaly_strength` (+1.96) next.
 
-### System performance
+### Performance
 
-| metric | value |
-|---|---|
-| telemetry throughput | 110,000 events/s (single process) |
-| service-windows/s | 876 |
-| mean window → diagnosis | 5.7 ms |
-| p95 window → diagnosis | 7.9 ms |
-| real-time speed-up | 2,600× |
+`make benchmark` times every stage in isolation with warm-up and repeats.
+Measured on an **Apple M1, 8 cores, Python 3.11**, single process, single
+thread — the honest baseline to scale from.
+
+| stage | throughput | p50 | p99 |
+|---|---|---|---|
+| telemetry ingest (bucketing records into windows) | 1,935,000 records/s | 0.336 ms | 0.369 ms |
+| feature reduction (buckets → feature rows) | 5,500 service-windows/s | 0.909 ms | 0.986 ms |
+| baseline resolution (median/MAD per metric) | 2,230 service-windows/s | 2.246 ms | 2.417 ms |
+| anomaly detection (4 detectors, 5 services) | 567 service-windows/s | 8.817 ms | 9.941 ms |
+| root-cause ranking + evidence | 265 incidents/s | 3.780 ms | 4.202 ms |
+| **end to end (telemetry in, diagnosis out)** | **83 windows/s** | **12.0 ms** | **13.4 ms** |
+
+Processing one 15-second window end to end costs **12 ms — 0.08% of the window
+budget**. Peak RSS during the benchmark was 239 MB.
+
+**Where the time actually goes.** Detection dominates, and inside detection a
+single component dominates everything else:
+
+| detector | throughput | p50 |
+|---|---|---|
+| static thresholds | 745,000 service-windows/s | 0.007 ms |
+| rolling z-score | 152,000 service-windows/s | 0.033 ms |
+| **Isolation Forest** | **824 service-windows/s** | **6.066 ms** |
+| autoencoder | 23,600 service-windows/s | 0.212 ms |
+
+The Isolation Forest is **185× slower than the z-score detector** and accounts
+for ~69% of detection time. Put next to the accuracy results, that settles an
+engineering question rather than leaving it to taste:
+
+| configuration | cost per window | incident precision |
+|---|---|---|
+| `statistical_load_adjusted` | **2.31 ms** | **0.971** |
+| `full_ensemble` | 8.82 ms | 0.944 |
+
+**Dropping the learned detectors is 3.8× cheaper *and* slightly more
+accurate.** Both ship, and `EnsembleDetector.statistical_only()` is what I
+would run in production; the learned ones stay because the comparison is the
+point.
+
+**Scaling with fleet size.** Per-service cost *falls* as the fleet grows,
+because detection scores a whole window in one vectorised call and the
+per-call overhead amortises:
+
+| services | p50 per window | p99 per window | per service | of the 15 s budget |
+|---|---|---|---|---|
+| 5 | 8.74 ms | 9.85 ms | 1748 µs | 0.066% |
+| 25 | 18.52 ms | 19.51 ms | 741 µs | 0.130% |
+| 50 | 30.33 ms | 37.85 ms | 607 µs | 0.252% |
+| 100 | 54.44 ms | 86.03 ms | 544 µs | 0.574% |
+
+At 100 services one process uses well under 1% of its window budget.
+Extrapolating linearly from that p50 gives an order of magnitude of
+**~27,000 services per process** — an extrapolation, not a measurement, and
+memory and Kafka consumer throughput would bind long before CPU does. (The
+p99 column is a single tail sample per fleet size and swings run to run;
+the p50 column is stable to within a percent.)
+
+Full report: [`experiments/results/benchmark.md`](experiments/results/benchmark.md).
 
 ![Detection by detector configuration](experiments/results/detection_ablation.png)
 ![Root-cause ranking on identical incidents](experiments/results/ranker_comparison.png)
@@ -447,6 +500,11 @@ runs once and is ranker-independent, so every ranker is scored on identical
 incidents. All the leakage controls are listed under
 [Dataset and labelling](#leakage-control).
 
+A separate benchmark (`scripts/benchmark.py`) times each stage in isolation,
+because the throughput numbers that fall out of an evaluation run measure the
+harness as much as the pipeline. It is what surfaced that the Isolation Forest
+costs 77% of detection time while contributing nothing to accuracy.
+
 Only then the dashboard: a FastAPI service and a dependency-free front end
 with hand-drawn SVG charts — no build step, no CDN, works offline.
 
@@ -537,7 +595,8 @@ incidentdna/
 ├── services/                 the real microservices (Docker path)
 ├── backend/                  FastAPI incident service + live system
 ├── frontend/                 dashboard (no build step, no CDN)
-├── scripts/                  generate_dataset · train · evaluate · replay
+├── scripts/                  generate_dataset · train · evaluate ·
+│                              benchmark · replay
 ├── telemetry/                OTel collector, Prometheus, JSON schemas
 ├── tests/                    115 tests
 └── docker-compose.yml
@@ -613,6 +672,8 @@ These are the things I would fix next, in order.
 
 ## What I would build next
 
+- Default the shipped detector to `statistical_only`, now that the benchmark
+  shows the learned detectors cost 3.8x and buy nothing.
 - Overlapping incidents, and an incident-splitting step before ranking.
 - Flink for the window aggregation (the feature builder is already written as
   an online operator, so the reductions port directly).

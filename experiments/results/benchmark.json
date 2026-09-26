@@ -1,0 +1,228 @@
+{
+  "machine": {
+    "cpu": "Apple M1",
+    "arch": "arm64",
+    "logical_cores": 8,
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "python": "3.11.1",
+    "numpy": "2.4.6"
+  },
+  "window_seconds": 15,
+  "detector": [
+    "static_threshold",
+    "rolling_zscore",
+    "isolation_forest",
+    "autoencoder"
+  ],
+  "detector_trained": true,
+  "stages": {
+    "ingest": {
+      "name": "Telemetry ingest (bucketing records into windows)",
+      "unit": "telemetry records/s",
+      "throughput": 1935098.4218,
+      "mean_ms": 0.3375,
+      "p50_ms": 0.3364,
+      "p95_ms": 0.3463,
+      "p99_ms": 0.369,
+      "max_ms": 0.3786,
+      "samples": 200,
+      "items_per_call": 651.0
+    },
+    "reduce": {
+      "name": "Feature reduction (buckets to feature rows)",
+      "unit": "service-windows/s",
+      "throughput": 5502.5688,
+      "mean_ms": 0.9141,
+      "p50_ms": 0.9087,
+      "p95_ms": 0.9444,
+      "p99_ms": 0.9864,
+      "max_ms": 1.1128,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "observe": {
+      "name": "Baseline resolution (median/MAD per metric)",
+      "unit": "service-windows/s",
+      "throughput": 2226.3241,
+      "mean_ms": 2.2601,
+      "p50_ms": 2.2459,
+      "p95_ms": 2.3454,
+      "p99_ms": 2.417,
+      "max_ms": 2.727,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "detect": {
+      "name": "Anomaly detection (4 detectors, 5 services)",
+      "unit": "service-windows/s",
+      "throughput": 567.1064,
+      "mean_ms": 8.9373,
+      "p50_ms": 8.8167,
+      "p95_ms": 9.5262,
+      "p99_ms": 9.9406,
+      "max_ms": 10.1774,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "rca": {
+      "name": "Root-cause ranking + evidence (per incident)",
+      "unit": "incidents/s",
+      "throughput": 264.5751,
+      "mean_ms": 3.8251,
+      "p50_ms": 3.7796,
+      "p95_ms": 4.1026,
+      "p99_ms": 4.2021,
+      "max_ms": 4.2249,
+      "samples": 50,
+      "items_per_call": 1.0
+    },
+    "candidates": {
+      "name": "  candidate feature extraction only",
+      "unit": "incidents/s",
+      "throughput": 764.8675,
+      "mean_ms": 1.3177,
+      "p50_ms": 1.3074,
+      "p95_ms": 1.3354,
+      "p99_ms": 1.5287,
+      "max_ms": 1.6406,
+      "samples": 50,
+      "items_per_call": 1.0
+    },
+    "end_to_end": {
+      "name": "End to end (telemetry in, diagnosis out, one window)",
+      "unit": "windows/s",
+      "throughput": 83.3109,
+      "mean_ms": 12.0529,
+      "p50_ms": 12.0032,
+      "p95_ms": 12.5964,
+      "p99_ms": 13.3948,
+      "max_ms": 13.8695,
+      "samples": 40,
+      "items_per_call": 1.0
+    }
+  },
+  "per_detector": {
+    "static_threshold": {
+      "name": "  static_threshold",
+      "unit": "service-windows/s",
+      "throughput": 745379.0565,
+      "mean_ms": 0.0071,
+      "p50_ms": 0.0067,
+      "p95_ms": 0.0075,
+      "p99_ms": 0.0143,
+      "max_ms": 0.0205,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "rolling_zscore": {
+      "name": "  rolling_zscore",
+      "unit": "service-windows/s",
+      "throughput": 152476.1515,
+      "mean_ms": 0.0331,
+      "p50_ms": 0.0328,
+      "p95_ms": 0.0339,
+      "p99_ms": 0.0348,
+      "max_ms": 0.0667,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "isolation_forest": {
+      "name": "  isolation_forest",
+      "unit": "service-windows/s",
+      "throughput": 824.2127,
+      "mean_ms": 6.1146,
+      "p50_ms": 6.0664,
+      "p95_ms": 6.4529,
+      "p99_ms": 6.771,
+      "max_ms": 6.858,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "autoencoder": {
+      "name": "  autoencoder",
+      "unit": "service-windows/s",
+      "throughput": 23610.4099,
+      "mean_ms": 0.215,
+      "p50_ms": 0.2118,
+      "p95_ms": 0.2232,
+      "p99_ms": 0.2987,
+      "max_ms": 0.4189,
+      "samples": 200,
+      "items_per_call": 5.0
+    }
+  },
+  "scaling": [
+    {
+      "services": 5,
+      "window_ms_p50": 8.741,
+      "window_ms_p99": 9.849,
+      "per_service_us": 1748.1,
+      "throughput": 572.0,
+      "window_budget_used_pct": 0.0657
+    },
+    {
+      "services": 10,
+      "window_ms_p50": 11.123,
+      "window_ms_p99": 12.503,
+      "per_service_us": 1112.3,
+      "throughput": 899.1,
+      "window_budget_used_pct": 0.0834
+    },
+    {
+      "services": 25,
+      "window_ms_p50": 18.521,
+      "window_ms_p99": 19.506,
+      "per_service_us": 740.8,
+      "throughput": 1349.8,
+      "window_budget_used_pct": 0.13
+    },
+    {
+      "services": 50,
+      "window_ms_p50": 30.329,
+      "window_ms_p99": 37.847,
+      "per_service_us": 606.6,
+      "throughput": 1648.6,
+      "window_budget_used_pct": 0.2523
+    },
+    {
+      "services": 100,
+      "window_ms_p50": 54.438,
+      "window_ms_p99": 86.03,
+      "per_service_us": 544.4,
+      "throughput": 1836.9,
+      "window_budget_used_pct": 0.5735
+    }
+  ],
+  "detector_configurations": {
+    "statistical_load_adjusted": {
+      "name": "statistical_load_adjusted",
+      "unit": "service-windows/s",
+      "throughput": 2164.0534,
+      "mean_ms": 2.4601,
+      "p50_ms": 2.3105,
+      "p95_ms": 2.5247,
+      "p99_ms": 2.6735,
+      "max_ms": 22.1615,
+      "samples": 200,
+      "items_per_call": 5.0
+    },
+    "full_ensemble": {
+      "name": "full_ensemble",
+      "unit": "service-windows/s",
+      "throughput": 567.1064,
+      "mean_ms": 8.9373,
+      "p50_ms": 8.8167,
+      "p95_ms": 9.5262,
+      "p99_ms": 9.9406,
+      "max_ms": 10.1774,
+      "samples": 200,
+      "items_per_call": 5.0
+    }
+  },
+  "configuration_speedup": 3.82,
+  "capacity": {
+    "services_per_process_per_window": 27554,
+    "basis": "linear extrapolation from the largest measured fleet (100 services, 54.4 ms p50 per window) against one 15s window; an order-of-magnitude figure, not a measurement"
+  },
+  "peak_rss_mb": 238.6
+}
