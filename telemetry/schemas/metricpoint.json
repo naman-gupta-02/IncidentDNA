@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MetricPoint",
+  "description": "A numeric measurement of a service at a point in time.",
+  "x-kafka-topic": "telemetry.metrics",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "number"
+    },
+    "service": {
+      "type": "string"
+    },
+    "metric": {
+      "type": "string"
+    },
+    "value": {
+      "type": "number"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "attributes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "timestamp",
+    "service",
+    "metric",
+    "value"
+  ]
+}

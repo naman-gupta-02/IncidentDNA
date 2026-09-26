@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LogRecord",
+  "description": "LogRecord(timestamp: 'float', service: 'str', severity: 'str', event: 'str', trace_id: 'Optional[str]' = None, attributes: 'Dict[str, Any]' = <factory>)",
+  "x-kafka-topic": "telemetry.logs",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "number"
+    },
+    "service": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string"
+    },
+    "event": {
+      "type": "string"
+    },
+    "trace_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "attributes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "timestamp",
+    "service",
+    "severity",
+    "event"
+  ]
+}

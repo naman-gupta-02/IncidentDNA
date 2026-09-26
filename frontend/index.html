@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IncidentDNA</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>" />
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🧬</span>
+    <div>
+      <h1>IncidentDNA</h1>
+      <p class="tagline">Detect · diagnose · explain</p>
+    </div>
+  </div>
+  <div class="status" id="status">
+    <div class="stat"><label>Source</label><span id="stat-source">—</span></div>
+    <div class="stat"><label>Clock</label><span id="stat-clock">—</span></div>
+    <div class="stat"><label>Windows</label><span id="stat-windows">—</span></div>
+    <div class="stat"><label>Telemetry</label><span id="stat-records">—</span></div>
+    <div class="stat"><label>Incidents</label><span id="stat-incidents">—</span></div>
+  </div>
+</header>
+
+<section class="controls">
+  <div class="control-group">
+    <label for="fault-select">Inject fault</label>
+    <select id="fault-select"></select>
+    <select id="origin-select"></select>
+    <label class="inline">Severity <input type="range" id="severity" min="0.3" max="1" step="0.05" value="0.85" /></label>
+    <span id="severity-value" class="pill">0.85</span>
+    <button id="inject" class="primary">Inject</button>
+    <button id="clear">Clear faults</button>
+  </div>
+  <div class="control-group right">
+    <label for="ranker-select">Root-cause ranker</label>
+    <select id="ranker-select"></select>
+    <span id="active-faults" class="pill muted">no active fault</span>
+  </div>
+</section>
+
+<main>
+  <div class="grid-two">
+    <!-- 1. system overview -->
+    <section class="card" id="overview">
+      <header><h2>System overview</h2><span class="hint">live health of every service and the call graph between them</span></header>
+      <div id="graph"></div>
+      <div class="legend">
+        <span><i class="dot healthy"></i>healthy</span>
+        <span><i class="dot degraded"></i>degraded</span>
+        <span><i class="dot critical"></i>abnormal</span>
+        <span><i class="dot cause"></i>ranked root cause</span>
+      </div>
+    </section>
+
+    <!-- 5. model explanation -->
+    <section class="card" id="diagnosis-card">
+      <header><h2>Diagnosis</h2><span class="hint" id="diagnosis-ranker"></span></header>
+      <div id="diagnosis"><p class="empty">No incident open. Inject a fault to start an investigation.</p></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <header>
+      <h2>Investigation</h2>
+      <nav class="tabs" id="tabs">
+        <button data-tab="timeline" class="active">Timeline</button>
+        <button data-tab="metrics">Metric comparison</button>
+        <button data-tab="traces">Trace evidence</button>
+        <button data-tab="candidates">Model explanation</button>
+        <button data-tab="evaluation">Evaluation</button>
+      </nav>
+    </header>
+    <div class="tabpanes">
+      <div class="tabpane active" id="tab-timeline"><p class="empty">Nothing yet.</p></div>
+      <div class="tabpane" id="tab-metrics"></div>
+      <div class="tabpane" id="tab-traces"><p class="empty">Nothing yet.</p></div>
+      <div class="tabpane" id="tab-candidates"><p class="empty">Nothing yet.</p></div>
+      <div class="tabpane" id="tab-evaluation"><p class="empty">Loading…</p></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <header><h2>Incidents</h2><span class="hint">click one to inspect it</span></header>
+    <div id="incident-list"><p class="empty">None yet.</p></div>
+  </section>
+</main>
+
+<footer>
+  <span>IncidentDNA — anomaly detection, dependency-aware root-cause ranking and evidence generation over OpenTelemetry-shaped data.</span>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

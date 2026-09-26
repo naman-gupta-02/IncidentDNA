@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Span",
+  "description": "One unit of work. A server span is a request handled by a service;",
+  "x-kafka-topic": "telemetry.spans",
+  "type": "object",
+  "properties": {
+    "trace_id": {
+      "type": "string"
+    },
+    "span_id": {
+      "type": "string"
+    },
+    "parent_span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "service": {
+      "type": "string"
+    },
+    "operation": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "start_time": {
+      "type": "number"
+    },
+    "duration_ms": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    },
+    "peer_service": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "attributes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "trace_id",
+    "span_id",
+    "parent_span_id",
+    "service",
+    "operation",
+    "kind",
+    "start_time",
+    "duration_ms"
+  ]
+}

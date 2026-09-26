@@ -1,0 +1,23 @@
+# --- local environment ---------------------------------------------------
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+.claude/
+
+# --- source material, not part of the deliverable ------------------------
+IncidentDNA_Project_Guide.pdf
+
+# --- regenerable experiment outputs --------------------------------------
+# The dataset (~10 MB) rebuilds in ~20s and the models in ~70s, so neither is
+# worth versioning; `make pipeline` reproduces both. The evaluation report and
+# its charts ARE committed, because they are the evidence for every number in
+# the README, and so is the recorded capture that `make replay` uses.
+experiments/dataset/
+experiments/artifacts/
+experiments/captures/demo.jsonl
+
+*.jsonl
+!experiments/captures/*.jsonl.gz

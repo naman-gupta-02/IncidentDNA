@@ -1,0 +1,1300 @@
+{
+  "split": "test",
+  "runs": 45,
+  "injected_incidents": 36,
+  "window_seconds": 15,
+  "detection": {
+    "zscore_only": {
+      "incident_precision": 0.7045,
+      "incident_recall": 0.8611,
+      "f1": 0.775,
+      "true_positives": 31,
+      "false_alerts": 13,
+      "missed": 5,
+      "duplicate_alerts": 3,
+      "mean_detection_delay_seconds": 42.58,
+      "median_detection_delay_seconds": 30.0,
+      "p95_detection_delay_seconds": 60.0,
+      "false_alerts_per_hour": 1.1103,
+      "normal_hours_observed": 11.708,
+      "by_fault_type": {
+        "cpu_saturation": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "database_latency": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "payment_timeout": {
+          "recall": 0.6666666666666666,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "connection_exhaustion": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "bad_deployment": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "memory_leak": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 45.0
+        }
+      },
+      "replay_seconds": 6.94
+    },
+    "statistical": {
+      "incident_precision": 0.8205,
+      "incident_recall": 0.8889,
+      "f1": 0.8533,
+      "true_positives": 32,
+      "false_alerts": 7,
+      "missed": 4,
+      "duplicate_alerts": 3,
+      "mean_detection_delay_seconds": 36.09,
+      "median_detection_delay_seconds": 30.0,
+      "p95_detection_delay_seconds": 66.75,
+      "false_alerts_per_hour": 0.5979,
+      "normal_hours_observed": 11.708,
+      "by_fault_type": {
+        "cpu_saturation": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "database_latency": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "payment_timeout": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "connection_exhaustion": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "bad_deployment": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "memory_leak": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 60.0
+        }
+      },
+      "replay_seconds": 7.08
+    },
+    "statistical_load_adjusted": {
+      "incident_precision": 0.9714,
+      "incident_recall": 0.9444,
+      "f1": 0.9577,
+      "true_positives": 34,
+      "false_alerts": 1,
+      "missed": 2,
+      "duplicate_alerts": 3,
+      "mean_detection_delay_seconds": 37.5,
+      "median_detection_delay_seconds": 30.0,
+      "p95_detection_delay_seconds": 65.25,
+      "false_alerts_per_hour": 0.0854,
+      "normal_hours_observed": 11.708,
+      "by_fault_type": {
+        "cpu_saturation": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 37.5
+        },
+        "database_latency": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "payment_timeout": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "connection_exhaustion": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "bad_deployment": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "memory_leak": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 60.0
+        }
+      },
+      "replay_seconds": 6.92
+    },
+    "full_ensemble": {
+      "incident_precision": 0.9444,
+      "incident_recall": 0.9444,
+      "f1": 0.9444,
+      "true_positives": 34,
+      "false_alerts": 2,
+      "missed": 2,
+      "duplicate_alerts": 2,
+      "mean_detection_delay_seconds": 36.18,
+      "median_detection_delay_seconds": 30.0,
+      "p95_detection_delay_seconds": 65.25,
+      "false_alerts_per_hour": 0.1708,
+      "normal_hours_observed": 11.708,
+      "by_fault_type": {
+        "cpu_saturation": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "database_latency": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "payment_timeout": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "connection_exhaustion": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "bad_deployment": {
+          "recall": 1.0,
+          "n": 6,
+          "median_delay_seconds": 30.0
+        },
+        "memory_leak": {
+          "recall": 0.8333333333333334,
+          "n": 6,
+          "median_delay_seconds": 60.0
+        }
+      },
+      "replay_seconds": 23.66
+    }
+  },
+  "diagnosis": {
+    "random": {
+      "ranker": "random",
+      "n_incidents": 34,
+      "top1_accuracy": 0.1765,
+      "top3_accuracy": 0.6765,
+      "mrr": 0.4711,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 0.0,
+          "top3": 0.5,
+          "mrr": 0.32222222222222224
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 0.0,
+          "top3": 0.5,
+          "mrr": 0.35833333333333334
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 0.3333333333333333,
+          "top3": 1.0,
+          "mrr": 0.638888888888889
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 0.0,
+          "top3": 0.6,
+          "mrr": 0.3466666666666666
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 0.2,
+          "top3": 0.8,
+          "mrr": 0.4833333333333334
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 0.5,
+          "top3": 0.6666666666666666,
+          "mrr": 0.6583333333333333
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "postgres": 2,
+          "payment-service": 2,
+          "inventory-service": 2,
+          "order-service": 1,
+          "api-gateway": 1
+        },
+        "postgres": {
+          "payment-service": 6,
+          "order-service": 2,
+          "api-gateway": 2,
+          "inventory-service": 1
+        },
+        "inventory-service": {
+          "order-service": 1,
+          "inventory-service": 1,
+          "postgres": 1,
+          "api-gateway": 1
+        },
+        "payment-service": {
+          "api-gateway": 2,
+          "payment-service": 3,
+          "postgres": 1
+        },
+        "api-gateway": {
+          "api-gateway": 1,
+          "order-service": 3,
+          "postgres": 1
+        }
+      },
+      "failures": [
+        {
+          "run_id": "run_0104",
+          "fault_type": "cpu_saturation",
+          "true_root_cause": "order-service",
+          "predicted": "postgres",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "postgres",
+            "order-service",
+            "api-gateway",
+            "inventory-service",
+            "payment-service"
+          ]
+        },
+        {
+          "run_id": "run_0106",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "payment-service",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "postgres",
+            "api-gateway",
+            "order-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0110",
+          "fault_type": "cpu_saturation",
+          "true_root_cause": "inventory-service",
+          "predicted": "order-service",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "inventory-service",
+            "postgres",
+            "payment-service",
+            "api-gateway"
+          ]
+        },
+        {
+          "run_id": "run_0113",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "inventory-service",
+            "postgres"
+          ]
+        },
+        {
+          "run_id": "run_0114",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "api-gateway",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "api-gateway",
+            "inventory-service",
+            "postgres",
+            "order-service",
+            "payment-service"
+          ]
+        },
+        {
+          "run_id": "run_0117",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "inventory-service",
+            "payment-service",
+            "postgres"
+          ]
+        },
+        {
+          "run_id": "run_0122",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "payment-service",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "postgres",
+            "order-service",
+            "inventory-service",
+            "api-gateway"
+          ]
+        },
+        {
+          "run_id": "run_0125",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "api-gateway",
+          "rank_of_truth": 4,
+          "mode": "misrank",
+          "ranking": [
+            "api-gateway",
+            "postgres",
+            "order-service",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0131",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "payment-service",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "order-service",
+            "api-gateway",
+            "inventory-service",
+            "postgres"
+          ]
+        },
+        {
+          "run_id": "run_0133",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "payment-service",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "inventory-service",
+            "order-service",
+            "api-gateway",
+            "postgres"
+          ]
+        },
+        {
+          "run_id": "run_0136",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "api-gateway",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "api-gateway",
+            "postgres",
+            "inventory-service",
+            "payment-service",
+            "order-service"
+          ]
+        },
+        {
+          "run_id": "run_0138",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "payment-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "api-gateway",
+            "postgres",
+            "order-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0139",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "inventory-service",
+          "rank_of_truth": 4,
+          "mode": "misrank",
+          "ranking": [
+            "inventory-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "order-service"
+          ]
+        },
+        {
+          "run_id": "run_0140",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "payment-service",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "postgres",
+            "inventory-service",
+            "order-service",
+            "api-gateway"
+          ]
+        },
+        {
+          "run_id": "run_0142",
+          "fault_type": "bad_deployment",
+          "true_root_cause": "inventory-service",
+          "predicted": "postgres",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "postgres",
+            "api-gateway",
+            "payment-service",
+            "order-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0145",
+          "fault_type": "cpu_saturation",
+          "true_root_cause": "api-gateway",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "inventory-service",
+            "api-gateway"
+          ]
+        },
+        {
+          "run_id": "run_0147",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "postgres",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "postgres",
+            "payment-service",
+            "inventory-service",
+            "api-gateway",
+            "order-service"
+          ]
+        },
+        {
+          "run_id": "run_0149",
+          "fault_type": "memory_leak",
+          "true_root_cause": "order-service",
+          "predicted": "payment-service",
+          "rank_of_truth": 4,
+          "mode": "misrank",
+          "ranking": [
+            "payment-service",
+            "postgres",
+            "inventory-service",
+            "order-service"
+          ]
+        },
+        {
+          "run_id": "run_0151",
+          "fault_type": "bad_deployment",
+          "true_root_cause": "api-gateway",
+          "predicted": "postgres",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "postgres",
+            "order-service",
+            "inventory-service",
+            "payment-service",
+            "api-gateway"
+          ]
+        },
+        {
+          "run_id": "run_0152",
+          "fault_type": "bad_deployment",
+          "true_root_cause": "order-service",
+          "predicted": "inventory-service",
+          "rank_of_truth": 5,
+          "mode": "misrank",
+          "ranking": [
+            "inventory-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "order-service"
+          ]
+        }
+      ]
+    },
+    "naive_anomaly_strength": {
+      "ranker": "naive_anomaly_strength",
+      "n_incidents": 34,
+      "top1_accuracy": 0.4412,
+      "top3_accuracy": 1.0,
+      "mrr": 0.6324,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 0.8333333333333334,
+          "top3": 1.0,
+          "mrr": 0.8888888888888888
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 0.0,
+          "top3": 1.0,
+          "mrr": 0.3333333333333333
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 0.6666666666666666,
+          "top3": 1.0,
+          "mrr": 0.8055555555555555
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 0.2,
+          "top3": 1.0,
+          "mrr": 0.4666666666666666
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 0.0,
+          "top3": 1.0,
+          "mrr": 0.3333333333333333
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "api-gateway": 1,
+          "order-service": 7
+        },
+        "postgres": {
+          "postgres": 1,
+          "order-service": 9,
+          "api-gateway": 1
+        },
+        "inventory-service": {
+          "order-service": 2,
+          "inventory-service": 2
+        },
+        "payment-service": {
+          "order-service": 6
+        },
+        "api-gateway": {
+          "api-gateway": 5
+        }
+      },
+      "failures": [
+        {
+          "run_id": "run_0104",
+          "fault_type": "cpu_saturation",
+          "true_root_cause": "order-service",
+          "predicted": "api-gateway",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "api-gateway",
+            "order-service",
+            "postgres",
+            "inventory-service",
+            "payment-service"
+          ]
+        },
+        {
+          "run_id": "run_0110",
+          "fault_type": "cpu_saturation",
+          "true_root_cause": "inventory-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "inventory-service",
+            "postgres",
+            "payment-service"
+          ]
+        },
+        {
+          "run_id": "run_0113",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0114",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0117",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "api-gateway",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "api-gateway",
+            "order-service",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0122",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0124",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0125",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0131",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0133",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0136",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "inventory-service",
+            "payment-service"
+          ]
+        },
+        {
+          "run_id": "run_0138",
+          "fault_type": "database_latency",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0139",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0140",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "payment-service",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0147",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0155",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0159",
+          "fault_type": "payment_timeout",
+          "true_root_cause": "payment-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "payment-service",
+            "postgres",
+            "inventory-service"
+          ]
+        },
+        {
+          "run_id": "run_0162",
+          "fault_type": "connection_exhaustion",
+          "true_root_cause": "postgres",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "postgres",
+            "inventory-service",
+            "payment-service"
+          ]
+        },
+        {
+          "run_id": "run_0165",
+          "fault_type": "bad_deployment",
+          "true_root_cause": "inventory-service",
+          "predicted": "order-service",
+          "rank_of_truth": 3,
+          "mode": "misrank",
+          "ranking": [
+            "order-service",
+            "api-gateway",
+            "inventory-service",
+            "postgres",
+            "payment-service"
+          ]
+        }
+      ]
+    },
+    "naive_earliest_onset": {
+      "ranker": "naive_earliest_onset",
+      "n_incidents": 34,
+      "top1_accuracy": 1.0,
+      "top3_accuracy": 1.0,
+      "mrr": 1.0,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "order-service": 8
+        },
+        "postgres": {
+          "postgres": 11
+        },
+        "inventory-service": {
+          "inventory-service": 4
+        },
+        "payment-service": {
+          "payment-service": 6
+        },
+        "api-gateway": {
+          "api-gateway": 5
+        }
+      },
+      "failures": []
+    },
+    "transparent": {
+      "ranker": "transparent",
+      "n_incidents": 34,
+      "top1_accuracy": 1.0,
+      "top3_accuracy": 1.0,
+      "mrr": 1.0,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "order-service": 8
+        },
+        "postgres": {
+          "postgres": 11
+        },
+        "inventory-service": {
+          "inventory-service": 4
+        },
+        "payment-service": {
+          "payment-service": 6
+        },
+        "api-gateway": {
+          "api-gateway": 5
+        }
+      },
+      "failures": []
+    },
+    "causal_locality": {
+      "ranker": "causal_locality",
+      "n_incidents": 34,
+      "top1_accuracy": 0.9706,
+      "top3_accuracy": 1.0,
+      "mrr": 0.9853,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 0.8333333333333334,
+          "top3": 1.0,
+          "mrr": 0.9166666666666666
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "order-service": 8
+        },
+        "postgres": {
+          "postgres": 11
+        },
+        "inventory-service": {
+          "inventory-service": 4
+        },
+        "payment-service": {
+          "payment-service": 6
+        },
+        "api-gateway": {
+          "api-gateway": 4,
+          "postgres": 1
+        }
+      },
+      "failures": [
+        {
+          "run_id": "run_0151",
+          "fault_type": "bad_deployment",
+          "true_root_cause": "api-gateway",
+          "predicted": "postgres",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "postgres",
+            "api-gateway",
+            "inventory-service",
+            "payment-service",
+            "order-service"
+          ]
+        }
+      ]
+    },
+    "learned_logistic": {
+      "ranker": "learned_logistic",
+      "n_incidents": 34,
+      "top1_accuracy": 1.0,
+      "top3_accuracy": 1.0,
+      "mrr": 1.0,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "order-service": 8
+        },
+        "postgres": {
+          "postgres": 11
+        },
+        "inventory-service": {
+          "inventory-service": 4
+        },
+        "payment-service": {
+          "payment-service": 6
+        },
+        "api-gateway": {
+          "api-gateway": 5
+        }
+      },
+      "failures": []
+    },
+    "learned_gbm": {
+      "ranker": "learned_gbm",
+      "n_incidents": 34,
+      "top1_accuracy": 0.9706,
+      "top3_accuracy": 1.0,
+      "mrr": 0.9853,
+      "candidate_coverage": 1.0,
+      "mean_candidates_per_incident": 4.5,
+      "by_fault_type": {
+        "bad_deployment": {
+          "n": 6,
+          "top1": 0.8333333333333334,
+          "top3": 1.0,
+          "mrr": 0.9166666666666666
+        },
+        "connection_exhaustion": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "cpu_saturation": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "database_latency": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "memory_leak": {
+          "n": 5,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        },
+        "payment_timeout": {
+          "n": 6,
+          "top1": 1.0,
+          "top3": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "confusion": {
+        "order-service": {
+          "order-service": 8
+        },
+        "postgres": {
+          "postgres": 11
+        },
+        "inventory-service": {
+          "inventory-service": 4
+        },
+        "payment-service": {
+          "payment-service": 6
+        },
+        "api-gateway": {
+          "api-gateway": 4,
+          "postgres": 1
+        }
+      },
+      "failures": [
+        {
+          "run_id": "run_0151",
+          "fault_type": "bad_deployment",
+          "true_root_cause": "api-gateway",
+          "predicted": "postgres",
+          "rank_of_truth": 2,
+          "mode": "misrank",
+          "ranking": [
+            "postgres",
+            "api-gateway",
+            "order-service",
+            "payment-service",
+            "inventory-service"
+          ]
+        }
+      ]
+    }
+  },
+  "system": {
+    "runs_measured": 8,
+    "service_windows_processed": 3840,
+    "wall_clock_seconds": 4.382,
+    "service_windows_per_second": 876.4,
+    "telemetry_events_per_second": 110427.2,
+    "mean_window_to_diagnosis_ms": 5.656,
+    "p95_window_to_diagnosis_ms": 7.908,
+    "max_window_to_diagnosis_ms": 36.233,
+    "realtime_speedup": 2629.2
+  }
+}

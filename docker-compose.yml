@@ -1,0 +1,160 @@
+# IncidentDNA — full stack.
+#
+#   docker compose up --build
+#   open http://localhost:8000
+#
+# Four instrumented microservices and PostgreSQL emit telemetry to Redpanda
+# (Kafka API). The IncidentDNA backend consumes those topics, builds window
+# features, scores anomalies, ranks root causes and serves the dashboard.
+#
+# Faults are injected by calling the target service directly, e.g.
+#   curl -XPOST localhost:8081/fault/database_latency \
+#        -H 'content-type: application/json' -d '{"severity":0.85}'
+#
+# The `observability` profile adds an OpenTelemetry Collector, Prometheus and
+# Jaeger for looking at the same system by hand:
+#   docker compose --profile observability up --build
+
+name: incidentdna
+
+x-service-base: &service-base
+  build:
+    context: .
+    dockerfile: Dockerfile
+  environment: &service-env
+    KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+    TRACE_SAMPLE_RATE: "0.3"
+    SERVICE_VERSION: v1.4.0
+    API_GATEWAY_URL: http://api-gateway:8000
+    ORDER_SERVICE_URL: http://order-service:8000
+    PAYMENT_SERVICE_URL: http://payment-service:8000
+    INVENTORY_SERVICE_URL: http://inventory-service:8000
+  restart: unless-stopped
+  depends_on:
+    redpanda:
+      condition: service_healthy
+
+services:
+  # ---------------------------------------------------------------- storage
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: incidentdna
+      POSTGRES_PASSWORD: incidentdna
+      POSTGRES_DB: shop
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U incidentdna -d shop"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+    # A deliberately small pool ceiling, so `connection_exhaustion` is a real
+    # constraint rather than a simulated one.
+    command: ["postgres", "-c", "max_connections=60", "-c", "shared_buffers=128MB"]
+
+  # -------------------------------------------------------------- transport
+  redpanda:
+    image: redpandadata/redpanda:v24.2.7
+    command:
+      - redpanda start
+      - --overprovisioned
+      - --smp 1
+      - --memory 512M
+      - --reserve-memory 0M
+      - --node-id 0
+      - --check=false
+      - --kafka-addr PLAINTEXT://0.0.0.0:9092,OUTSIDE://0.0.0.0:19092
+      - --advertise-kafka-addr PLAINTEXT://redpanda:9092,OUTSIDE://localhost:19092
+    ports: ["19092:19092"]
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -q 'Healthy:.*true'"]
+      interval: 6s
+      timeout: 5s
+      retries: 20
+
+  # ------------------------------------------------------------- the system
+  api-gateway:
+    <<: *service-base
+    command: ["uvicorn", "main:app", "--app-dir", "services/api-gateway", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8080:8000"]
+
+  order-service:
+    <<: *service-base
+    command: ["uvicorn", "main:app", "--app-dir", "services/order-service", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8081:8000"]
+    environment:
+      <<: *service-env
+      DATABASE_URL: postgresql://incidentdna:incidentdna@postgres:5432/shop
+      DB_POOL_SIZE: "10"
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    # Enough headroom that `memory_leak` ends in a real OOM restart.
+    mem_limit: 900m
+
+  payment-service:
+    <<: *service-base
+    command: ["uvicorn", "main:app", "--app-dir", "services/payment-service", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8082:8000"]
+
+  inventory-service:
+    <<: *service-base
+    command: ["uvicorn", "main:app", "--app-dir", "services/inventory-service", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8083:8000"]
+
+  loadgen:
+    <<: *service-base
+    command: ["python", "services/loadgen/main.py"]
+    environment:
+      <<: *service-env
+      LOADGEN_RPS: "20"
+      LOADGEN_WARMUP_SECONDS: "25"
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+
+  # ------------------------------------------------- detection + dashboard
+  incidentdna:
+    <<: *service-base
+    command: ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8000:8000"]
+    environment:
+      <<: *service-env
+      INCIDENTDNA_SOURCE: kafka
+      INCIDENTDNA_LOG: INFO
+    volumes:
+      # Trained detector and rankers, if `make train` has been run.
+      - ./experiments:/app/experiments
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/api/health || exit 1"]
+      interval: 15s
+      timeout: 4s
+      retries: 5
+
+  # ------------------------------------------- optional human observability
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.109.0
+    profiles: ["observability"]
+    command: ["--config=/etc/otel/config.yaml"]
+    volumes:
+      - ./telemetry/otel-collector.yaml:/etc/otel/config.yaml:ro
+    ports: ["4317:4317", "4318:4318", "8889:8889"]
+    depends_on:
+      redpanda:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    profiles: ["observability"]
+    volumes:
+      - ./telemetry/prometheus.yaml:/etc/prometheus/prometheus.yml:ro
+    ports: ["9090:9090"]
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.60
+    profiles: ["observability"]
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports: ["16686:16686"]

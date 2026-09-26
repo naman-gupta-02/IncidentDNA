@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeploymentEvent",
+  "description": "A release. Temporal proximity to an anomaly is root-cause evidence.",
+  "x-kafka-topic": "telemetry.deployments",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "number"
+    },
+    "service": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "previous_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "attributes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "timestamp",
+    "service",
+    "version"
+  ]
+}
